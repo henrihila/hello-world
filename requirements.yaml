@@ -1,0 +1,15 @@
+- src: git@github.comcast.com:harmonic/create_vcmts_crd.git
+  scm: git
+  version: 0.1.2
+- src: git@github.comcast.com:ngan-ansible-roles/li_proxy.git
+  scm: git
+  version: v1.0.3
+- src: git@github.comcast.com:ngan-ansible-roles/vcmts.git
+  scm: git
+  version: 2.20.0.4-7-auto20
+- src: git@github.comcast.com:ngan-ansible-roles/vcmts-tusc.git
+  scm: git
+  version: 2.20.0.4-7-auto20
+- src: git@github.comcast.com:ngan-ansible-roles/kafka_publisher.git
+  scm: git
+  version: v0.3.7

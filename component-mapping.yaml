@@ -1,0 +1,67 @@
+vcmts:
+  pod_types:
+    - ppod
+  namespace:
+    daas:
+      install: create_vcmts.sh daas_name
+      uninstall: delete_vcmts.sh daas_name
+      upgrade: upgrade_vcmts.sh daas_name all force
+  service_impacting: true
+  deployment_mode: upgrade
+  predeploy:
+    - preload_vcmts.sh
+  postdeploy:
+    - postdeploy_vcmts.sh
+  testname: VcmtsActivePodsTest RedisPodsTest RabbitClusterTest PtpStatusTest DhcpRelayPodTest PktCPodTest RphyCRDValidityTest AllProtectionGroupTest SDCollectorTest
+vcmts-tusc:
+  pod_types:
+  - ppod
+  namespace:
+    daas:
+      install: install_vcmts_tusc.sh daas_name
+      uninstall: uninstall_vcmts_tusc.sh daas_name
+      upgrade: install_vcmts_tusc.sh daas_name
+      healthcheck:
+        postcheck:
+        - hc_k8s_resources.sh -r role_name -n daas_name
+  deployment_mode: upgrade
+  service_impacting: false
+  predeploy: preload_vcmts_tusc.sh
+kafka_publisher:
+  pod_types:
+    - ppod
+  namespace:
+    default:
+      install: install_kafka_publisher.sh
+      uninstall: uninstall_kafka_publisher.sh
+      upgrade: install_kafka_publisher.sh
+      healthcheck:
+        postcheck:
+          - hc_k8s_resources.sh -r role_name
+  deployment_mode: upgrade
+  service_impacting: true
+  testname: KafkaConnectivityTest IscKeaPodHealthTest VcmtsEventPublisherProxyPodTest
+kubeadm-cfg-update:
+  pod_types:
+    - ppod
+    - cpod
+  namespace:
+    default:
+      install: install_kube_ff.sh
+      uninstall: uninstall_kube_ff.sh
+      upgrade: install_kube_ff.sh
+  deployment_mode: upgrade
+  service_impacting: true
+node_exporter:
+  pod_types:
+    - ppod
+    - cpod
+  namespace:
+    default:
+      install: install_node_exporter.sh
+      uninstall: uninstall_node_exporter.sh
+      healthcheck:
+        postcheck:
+          - hc_k8s_resources.sh -r role_name
+  service_impacting: false
+  testname: PrometheusHealthTest ThanosProxyPodTest
